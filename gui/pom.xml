@@ -57,6 +57,7 @@
         <dependency>
             <groupId>org.jboss.wise</groupId>
             <artifactId>wise-core-cxf</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- APIs provided in AS modules.  Exclude from WAR -->
@@ -220,9 +221,30 @@
                 <configuration>
                     <webappDirectory>${webappDirectory}</webappDirectory>
                     <packagingExcludes>WEB-INF/deploy/**</packagingExcludes>
+                    <attachClasses>true</attachClasses>
                 </configuration>
             </plugin>
 
+            <plugin>
+	            <artifactId>maven-jar-plugin</artifactId>
+		        <executions>
+		          <execution>
+		            <id>pages</id>
+		            <goals><goal>jar</goal></goals>
+		            <phase>package</phase>
+		            <configuration>
+		              <classifier>pages</classifier>
+		              <includes>
+		                <include>fonts/**</include>
+		                <include>images/**</include>
+		                <include>wise/**</include>
+		                <include>Main.*</include>
+		              </includes>
+		              <classesDirectory>${webappDirectory}</classesDirectory>
+		            </configuration>
+		          </execution>
+		        </executions>
+            </plugin>
 
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
